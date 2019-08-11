@@ -42,6 +42,17 @@ $tasks=[
         "completed"=>false
     ]
 ];
+
+function tasks_count($task_list, $title_task) {
+    $quantity_task=0;
+    foreach ($task_list as $key=>$value) {
+        if ($value["category"]===$title_task){
+            $quantity_task=$quantity_task+1;
+        };
+    };
+    return $quantity_task;
+};
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -82,12 +93,14 @@ $tasks=[
                 <h2 class="content__side-heading">Проекты</h2>
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                    <?php foreach($projects as $value): ?>
+
+                        <?php foreach($projects as $value): ?>
                             <li class="main-navigation__list-item">
                                 <a class="main-navigation__list-item-link" href="#"><?=$value; ?></a>
-                            <span class="main-navigation__list-item-count">0</span>
+                                <span class="main-navigation__list-item-count"><?=tasks_count($tasks, $value); ?></span>
                             </li>
-                     <?php endforeach; ?>
+                        <?php endforeach; ?>
+
                     </ul>
                 </nav>
 
@@ -114,10 +127,12 @@ $tasks=[
 
                     <label class="checkbox">
                         <!--добавить сюда атрибут "checked", если переменная $show_complete_tasks равна единице-->
-                    <input class="checkbox__input visually-hidden show_completed" type="checkbox"
-                        <?php if ($show_complete_tasks === 1): ?>
-                            checked
-                        <?php endif; ?>>
+
+                        <input class="checkbox__input visually-hidden show_completed" type="checkbox"
+                            <?php if ($show_complete_tasks === 1): ?>
+                                checked
+                            <?php endif; ?>>
+
                         <span class="checkbox__text">Показывать выполненные</span>
                     </label>
                 </div>
