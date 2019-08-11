@@ -1,7 +1,9 @@
 <?php
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
+
 $projects=["Входящие", "Учеба", "Работа", "Домашние дела", "Авто" ];
+
 $tasks=[
     [
         "title"=>"Собеседование в IT компании",
@@ -40,6 +42,7 @@ $tasks=[
         "completed"=>false
     ]
 ];
+
 function tasks_count($task_list, $title_task) {
     $quantity_task=0;
     foreach ($task_list as $key=>$value) {
@@ -49,6 +52,7 @@ function tasks_count($task_list, $title_task) {
     };
     return $quantity_task;
 };
+
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -89,12 +93,14 @@ function tasks_count($task_list, $title_task) {
                 <h2 class="content__side-heading">Проекты</h2>
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
+
                         <?php foreach($projects as $value): ?>
                             <li class="main-navigation__list-item">
                                 <a class="main-navigation__list-item-link" href="#"><?=$value; ?></a>
                                 <span class="main-navigation__list-item-count"><?=tasks_count($tasks, $value); ?></span>
                             </li>
                         <?php endforeach; ?>
+
                     </ul>
                 </nav>
 
@@ -121,10 +127,12 @@ function tasks_count($task_list, $title_task) {
 
                     <label class="checkbox">
                         <!--добавить сюда атрибут "checked", если переменная $show_complete_tasks равна единице-->
+
                         <input class="checkbox__input visually-hidden show_completed" type="checkbox"
                             <?php if ($show_complete_tasks === 1): ?>
                                 checked
                             <?php endif; ?>>
+
                         <span class="checkbox__text">Показывать выполненные</span>
                     </label>
                 </div>
