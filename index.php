@@ -1,7 +1,9 @@
 <?php
 // показывать или нет выполненные задачи
 $show_complete_tasks = rand(0, 1);
+
 $projects=["Входящие", "Учеба", "Работа", "Домашние дела", "Авто" ];
+
 $tasks=[
     [
         "title"=>"Собеседование в IT компании",
@@ -40,6 +42,7 @@ $tasks=[
         "completed"=>false
     ]
 ];
+
 function tasks_count($task_list, $title_task) {
     $quantity_task=0;
     foreach ($task_list as $key=>$value) {
@@ -49,6 +52,7 @@ function tasks_count($task_list, $title_task) {
     };
     return $quantity_task;
 };
+
 
 function filter_text($text_to_filter) {
     $text=htmlspecialchars($text_to_filter);
@@ -80,3 +84,4 @@ $layout_content = include_template("layout.php", [
 ]);
 print($layout_content);
 //?>
+
