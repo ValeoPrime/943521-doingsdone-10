@@ -1,6 +1,4 @@
 <?php
-// показывать или нет выполненные задачи
-$show_complete_tasks = rand(0, 1);
 $projects=["Входящие", "Учеба", "Работа", "Домашние дела", "Авто" ];
 $tasks=[
     [
@@ -41,15 +39,9 @@ $tasks=[
     ]
 ];
 
-require_once("functions.php");
+function get_category($category) {
+    return($category);
+};
 
-require_once("data.php");
-
-$page_content = include_template("main.php", ["tasks" => $tasks, "projects" => $projects] );
-$layout_content = include_template("layout.php", [
-    'content' => $page_content,
-    'user_name' => "Константин",
-    'title' => 'Дела в порядке - Главная страница'
-]);
-print($layout_content);
-?>
+get_category($projects);
+get_category($tasks);
