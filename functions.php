@@ -29,6 +29,7 @@ function include_template($name, $data) {
     $result = ob_get_clean();
 
     return $result;
+
 };
 
 function burning_task($date_tasks) {
@@ -43,4 +44,7 @@ $ts_diff = $task_date - $current_date;
 $time_lefts = floor($ts_diff / $secs_in_hour); // округление полученного значения в меньшую сторону
 
 return $time_lefts;}
+
+}
+
 ?>
