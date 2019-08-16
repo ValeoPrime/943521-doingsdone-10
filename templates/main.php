@@ -45,7 +45,9 @@
     </div>
 
     <table class="tasks">
-        <?php foreach($tasks as $key=>$value): ?>
+
+        <?php foreach($tasks as $value): ?>
+
             <tr class="tasks__item task
             <?php
             if ($value["completed"]===true): ?>
@@ -54,11 +56,22 @@
             <?php if ($show_complete_tasks===0 and $value["completed"]===true ): ?>
                             visually-hidden
             <?php endif ?>
+
+
+            <?php
+            $time_left=burning_task($value["date"]);
+            ?>
+            <?php if ($time_left>0 && $time_left<=24): ?>
+                task--important
+            <?php endif ?>
+
                             ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden" type="checkbox">
-                        <span class="checkbox__text"><?=filter_text($value["title"])?> </span>
+
+                        <span class="checkbox__text"><?=filter_text($value["title"]); ?> </span>
+
                     </label>
                 </td>
                 <td class="task__date"><?=$value["date"]?></td>
