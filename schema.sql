@@ -3,7 +3,8 @@ CREATE DATABASE doings_done;
 
 CREATE TABLE projects (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  project_title VARCHAR(60)
+  project_title VARCHAR(60),
+  user_id INT(10)
 );
 
 CREATE TABLE tasks (
@@ -12,10 +13,10 @@ CREATE TABLE tasks (
   status INT(1),
   task_title VARCHAR(80),
   task_file VARCHAR(30),
-  deadline DATETIME(6)
+  deadline DATETIME(6),
+  user_id INT(10),
+  project_id INT(10)
 );
-
-
 
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
