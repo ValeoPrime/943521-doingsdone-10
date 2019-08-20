@@ -7,8 +7,8 @@ INSERT INTO projects SET project_title = 'Домашние дела', user_id = 
 INSERT INTO projects SET project_title = 'Авто', user_id = 2;
 '
 //Добав'ляем пользователей
-INSERT INTO users SET date_of_registration = '10.05.19', email = 'vasya@mail.ru', user_name = 'VasiliyVelikiy', password = 123;
-INSERT INTO users SET date_of_registration = '12.06.19', email = 'vanya@mail.ru', user_name = 'IvanVelikiy', password = 456;
+INSERT INTO users SET date_of_registration = '10.05.19', email = 'vasya@mail.ru', user_name = 'VasiliyVelikiy', password = '123';
+INSERT INTO users SET date_of_registration = '12.06.19', email = 'vanya@mail.ru', user_name = 'IvanVelikiy', password = '456';
 
 //Добавляем задачи
 INSERT INTO tasks SET date_of_creation = '12.06.19', status = 0, task_title = 'Собеседование в IT компании', task_file = '', deadline = '01.12.18', user_id = 1, project_id = 3;
