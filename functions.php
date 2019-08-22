@@ -2,7 +2,7 @@
 function tasks_count($task_list, $title_task) {
     $quantity_task=0;
     foreach ($task_list as $key=>$value) {
-        if ($value["category"]===$title_task){
+        if ($value["project_id"]===$title_task){
             $quantity_task=$quantity_task+1;
         };
     };
@@ -43,7 +43,7 @@ $task_date = strtotime($date_tasks);
 $ts_diff = $task_date - $current_date;
 $time_lefts = floor($ts_diff / $secs_in_hour); // округление полученного значения в меньшую сторону
 
-return $time_lefts;}
+return $time_lefts;
 
 }
 
