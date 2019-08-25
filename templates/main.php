@@ -6,7 +6,7 @@
             <?php foreach($projects as $value): ?>
                 <li class="main-navigation__list-item">
                     <a class="main-navigation__list-item-link" href="#"><?=filter_text($value["project_title"]); ?></a>
-                    <span class="main-navigation__list-item-count"><?=$tasks, $value["project_title"]//--tasks_count()t-->; ?>
+                    <span class="main-navigation__list-item-count"><?=tasks_count($tasks, $value["id"]); ?>
                 </li>
             <?php endforeach; ?>
 
@@ -74,7 +74,10 @@
 
                     </label>
                 </td>
-                <td class="task__date"><?=$value["deadline"]?></td>
+                <td class="task__date"><?php
+                    if ($value["deadline"]<= 0) { print ("Нет");}
+                    else {print($value["deadline"]);}
+                    ?></td>
                 <td class="task__controls"></td>
             </tr>
         <?php endforeach ?>
