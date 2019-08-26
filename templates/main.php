@@ -5,8 +5,8 @@
 
             <?php foreach($projects as $value): ?>
                 <li class="main-navigation__list-item">
-                    <a class="main-navigation__list-item-link" href="#"><?=filter_text($value); ?></a>
-                    <span class="main-navigation__list-item-count"><?=tasks_count($tasks, $value); ?></span>
+                    <a class="main-navigation__list-item-link" href="#"><?=filter_text($value["project_title"]); ?></a>
+                    <span class="main-navigation__list-item-count"><?=tasks_count($tasks, $value["id"]); ?>
                 </li>
             <?php endforeach; ?>
 
@@ -50,16 +50,16 @@
 
             <tr class="tasks__item task
             <?php
-            if ($value["completed"]===true): ?>
+            if ($value["status"]===1): ?>
                                 task--completed
             <?php endif ?>
-            <?php if ($show_complete_tasks===0 and $value["completed"]===true ): ?>
+            <?php if ($show_complete_tasks===0 and $value["status"]===1 ): ?>
                             visually-hidden
             <?php endif ?>
 
 
             <?php
-            $time_left=burning_task($value["date"]);
+            $time_left=burning_task($value["deadline"]);
             ?>
             <?php if ($time_left>0 && $time_left<=24): ?>
                 task--important
@@ -70,11 +70,14 @@
                     <label class="checkbox task__checkbox">
                         <input class="checkbox__input visually-hidden" type="checkbox">
 
-                        <span class="checkbox__text"><?=filter_text($value["title"]); ?> </span>
+                        <span class="checkbox__text"><?=$value["task_title"]; ?> </span>
 
                     </label>
                 </td>
-                <td class="task__date"><?=$value["date"]?></td>
+                <td class="task__date"><?php
+                    if ($value["deadline"]<= 0) { print ("Нет");}
+                    else {print($value["deadline"]);}
+                    ?></td>
                 <td class="task__controls"></td>
             </tr>
         <?php endforeach ?>
