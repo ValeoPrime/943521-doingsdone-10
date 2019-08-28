@@ -12,20 +12,8 @@ $projects = get_projects();
 $tasks ="";
 $task_counting=get_tasks();
 
-if (isset($_GET['id']) && $_GET['id'] == '1') {
-    $projects_id = '1';
-}
-elseif (isset($_GET['id']) && $_GET['id'] == '2') {
-    $projects_id = '2';
-}
-elseif (isset($_GET['id']) && $_GET['id'] == '3') {
-    $projects_id = '3';
-}
-elseif (isset($_GET['id']) && $_GET['id'] == '4') {
-    $projects_id = '4';
-}
-elseif (isset($_GET['id']) && $_GET['id'] == '5') {
-    $projects_id = '5';
+if (isset($_GET['id']) && is_numeric($_GET['id'])) {
+    $projects_id = $_GET['id'];
 }
 
 else {
@@ -38,12 +26,12 @@ if ($result = mysqli_query($link, $sql)) {
     $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
-if ($_GET['id']> count($projects) or count($tasks)==0){
+$project_sql ="SELECT id=$projects_id, project_title FROM projects";
+
+if ($project_sql==false or count($tasks)==0){
 
     print("страница не найдена, код ответа 404");
-
-
-}
+ }
 else {
     $page_content = include_template("main.php", ["tasks" => $tasks, "projects" => $projects,
         "projects_id"=>$projects_id, "task_counting"=>$task_counting ] );
