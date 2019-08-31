@@ -50,7 +50,7 @@
 
     <table class="tasks">
 
-        <?php foreach($tasks as $value): ?>
+        <?php foreach($tasks as $value):;?>
 
             <tr class="tasks__item task
             <?php
@@ -72,12 +72,20 @@
                             ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
+
                         <input class="checkbox__input visually-hidden" type="checkbox">
 
                         <span class="checkbox__text"><?=$value["task_title"]; ?> </span>
 
                     </label>
+                        <?php if (!empty($value["task_file"]) ): ?>
+                            <a href="uploads/<?= $upload_files["path"]; ?>">Загруженный файл</a>
+                        <?php endif; ?>
                 </td>
+
+
+                </td>
+
                 <td class="task__date"><?php
                     if ($value["deadline"]<= 0) { print ("Нет");}
                     else {print($value["deadline"]);}

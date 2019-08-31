@@ -33,13 +33,16 @@ if ($project_sql==false or count($tasks)==0){
     print("страница не найдена, код ответа 404");
  }
 else {
+//    var_dump($tasks);
     $page_content = include_template("main.php", ["tasks" => $tasks, "projects" => $projects,
         "projects_id"=>$projects_id, "task_counting"=>$task_counting ] );
+
     $layout_content = include_template("layout.php", [
         'content' => $page_content,
         'user_name' => "Константин",
         'title' => 'Дела в порядке - Главная страница'
     ]);
+
     print($layout_content);}
 
 
