@@ -15,12 +15,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors = [];
 
     $validation_rules = [
+
         'email' => function () {
             return validateFilled('email');
         },
-//        'email' => function () {
-//            return validateEmail('email');
-//        },
+        'email' => function () {
+            return validateEmail($link, 'email');
+        },
         'password' => function () {
             return validateFilled('password');
         },
@@ -50,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $page_content = include_template('user_registration.php', [ 'errors' => $errors]);
     }
     else {
-        $sql = 'INSERT INTO tasks (date_of_registration, email, user_name, password) 
+        $sql = 'INSERT INTO tasks (date_of_registration, email, password, user_name) 
             VALUES (NOW(), ?, ?, ?)';
 
         $stmt = db_get_prepare_stmt($link, $sql, $new_user);

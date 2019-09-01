@@ -1,4 +1,6 @@
 <?php
+
+
 function tasks_count($task_list, $title_task) {
     $quantity_task=0;
     foreach ($task_list as $key=>$value) {
@@ -57,7 +59,7 @@ function validateFilled($name) {
 
 }
 // Проверка есть ли проекты с таким id  в базе
-function validateProject($projects_id) {
+function validateProject( $projects_id) {
 
     $project_sql ="SELECT id=$projects_id FROM projects";
     $result = mysqli_query($link, $project_sql);
@@ -67,10 +69,10 @@ function validateProject($projects_id) {
     return null;
 }
 
-function validateEmail($email) {
-    $email_sql ="SELECT email=$email FROM users";
+function validateEmail($link, $email) {
+    $email_sql ="SELECT email FROM users WHERE email=$email";
     $result = mysqli_query($link, $email_sql);
-    if ($result==true){
+    if ($result){
         return "Указанный емаил используется другим пользователем";
     }
     return null;
