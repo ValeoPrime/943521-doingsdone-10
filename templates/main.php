@@ -79,7 +79,7 @@
 
                     </label>
                         <?php if (!empty($value["task_file"]) ): ?>
-                            <a href="uploads/<?= $upload_files["path"]; ?>">Загруженный файл</a>
+                            <a href="uploads/<?= $value["task_file"]; ?>">Загруженный файл</a>
                         <?php endif; ?>
                 </td>
 

@@ -10,16 +10,16 @@ $upload_files=[];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $new_task=[];// Нужен для выстраивания переменных как в запросе к бд
-    array_push($new_task, $_POST ['name']);
-    array_push($new_task, $_FILES['file']['name']);
-    if (empty($_POST ['date'])) {
-        array_push($new_task, 0);
-    }
-    else {array_push($new_task, $_POST ['date']);}
-//    array_push($new_task, $_POST ['date']);
-    array_push($new_task, "1");
-    array_push($new_task, $_POST ['project']);
+//    $new_task=[];// Нужен для выстраивания переменных как в запросе к бд
+//    array_push($new_task, $_POST ['name']);
+//    array_push($new_task, $_FILES['file']['name']);
+//    if (empty($_POST ['date'])) {
+//        array_push($new_task, 0);
+//    }
+//    else {array_push($new_task, $_POST ['date']);}
+////    array_push($new_task, $_POST ['date']);
+//    array_push($new_task, "1");
+//    array_push($new_task, $_POST ['project']);
 
     $validation_fields = ['name', 'project', 'date'];
     $errors = [];
@@ -67,7 +67,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 //        var_dump($filename);
     }
-
+    $new_task=[];// Нужен для выстраивания переменных как в запросе к бд
+    array_push($new_task, $_POST ['name']);
+    array_push($new_task, $filename);
+    if (empty($_POST ['date'])) {
+        array_push($new_task, 0);
+    }
+    else {array_push($new_task, $_POST ['date']);}
+//    array_push($new_task, $_POST ['date']);
+    array_push($new_task, "1");
+    array_push($new_task, $_POST ['project']);
 
         if (count($errors)) {
             $page_content = include_template('formtask.php', ["projects" => $projects, 'errors' => $errors,
