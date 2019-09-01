@@ -58,9 +58,20 @@ function validateFilled($name) {
 }
 // Проверка есть ли проекты с таким id  в базе
 function validateProject($projects_id) {
+
     $project_sql ="SELECT id=$projects_id FROM projects";
-    if ($project_sql==false ){
+    $result = mysqli_query($link, $project_sql);
+    if ($result==false ){
         return "Такого проекта не существует";
+    }
+    return null;
+}
+
+function validateEmail($email) {
+    $email_sql ="SELECT email=$email FROM users";
+    $result = mysqli_query($link, $email_sql);
+    if ($result==true){
+        return "Указанный емаил используется другим пользователем";
     }
     return null;
 }
@@ -75,6 +86,7 @@ function validateCategory($name, $allowed_list) {
     }
     return null;
 }
+
 function validateDate($date) {
     if ( date('Y-m-d', strtotime($_POST[$date])) !== $_POST[$date] and !empty($_POST[$date])
         or date('Y-m-d', strtotime($_POST[$date]))<date('Y-m-d') and !empty($_POST[$date]) ) {
