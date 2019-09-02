@@ -6,6 +6,7 @@ require_once ("init.php");
 
 $projects = get_projects();
 $task_counting=get_tasks();
+
 $upload_files=[];
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -19,9 +20,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         'email' => function () {
             return validateFilled('email');
         },
-        'email' => function () {
-            return validateEmail($link, 'email');
-        },
         'password' => function () {
             return validateFilled('password');
         },
@@ -31,6 +29,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     ];
 
+//    foreach ($email_base as $value) { // Проверка майла через обход массива
+//        if ($_POST ['email']==$value['email']) {
+//            array_push($errors, "Этот емаил уже используется");
+//
+//        }
+//    };
+
     foreach ($_POST as $key => $value) {
         if (isset($validation_rules[$key])) {
             $rule = $validation_rules[$key];
@@ -38,7 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+    $errors['email_free']=validateEmail($link, $_POST['email']);
+
     $errors = array_filter($errors);
+
 //    var_dump($errors);
     $new_user = [];
     array_push($new_user, $_POST ['email']);
@@ -51,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $page_content = include_template('user_registration.php', [ 'errors' => $errors]);
     }
     else {
-        $sql = 'INSERT INTO tasks (date_of_registration, email, password, user_name) 
+        $sql = 'INSERT INTO users (date_of_registration, email, password, user_name) 
             VALUES (NOW(), ?, ?, ?)';
 
         $stmt = db_get_prepare_stmt($link, $sql, $new_user);
@@ -62,8 +70,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //                $last_id = mysqli_insert_id($link);
 
             header("Location: index.php"); //?id=" . $_POST ['project'])
-            $page_content = include_template('user_registration.php', ["projects" => $projects, 'errors' => $errors,
-                "task_counting" => $task_counting, "upload_files"=>$upload_files]);
+//            $page_content = include_template('user_registration.php', ["projects" => $projects, 'errors' => $errors,
+//                "task_counting" => $task_counting, "upload_files"=>$upload_files]);
 
 
         }

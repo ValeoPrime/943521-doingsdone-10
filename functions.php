@@ -59,9 +59,9 @@ function validateFilled($name) {
 
 }
 // Проверка есть ли проекты с таким id  в базе
-function validateProject( $projects_id) {
+function validateProject($link, $projects_id) {
 
-    $project_sql ="SELECT id=$projects_id FROM projects";
+    $project_sql ="SELECT id FROM projects WHERE id=$projects_id";
     $result = mysqli_query($link, $project_sql);
     if ($result==false ){
         return "Такого проекта не существует";
@@ -73,9 +73,9 @@ function validateEmail($link, $email) {
     $email_sql ="SELECT email FROM users WHERE email=$email";
     $result = mysqli_query($link, $email_sql);
     if ($result){
-        return "Указанный емаил используется другим пользователем";
+        return "Почта занята";
     }
-    return null;
+
 }
 
 

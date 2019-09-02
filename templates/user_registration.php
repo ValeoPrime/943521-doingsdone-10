@@ -15,12 +15,15 @@
                         <label class="form__label" for="email">E-mail <sup>*</sup></label>
 
                         <input class="form__input
-                        <?php if (isset($errors['email'])): ?>
+                        <?php if (isset($errors['email']) or isset($errors['email_free'])): ?>
                         form__input--error
                         <?php endif; ?>
                         " type="text" name="email" id="email" value="" placeholder="Введите e-mail">
                         <?php if (isset($errors['email'])): ?>
-                        <p class="form__message">Укажите E-mail,  уже используется</p>
+                        <p class="form__message">Укажите E-mail</p>
+                        <?php endif; ?>
+                        <?php if (isset($errors['email_free'])): ?>
+                        <p class="form__message">Указанный E-mail  уже используется</p>
                         <?php endif; ?>
                     </div>
 
