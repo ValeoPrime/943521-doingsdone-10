@@ -19,21 +19,31 @@ $show_complete_tasks = rand(0, 1);
 <div class="page-wrapper">
     <div class="container container--with-sidebar">
         <header class="main-header">
+
             <a href="/">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
 
-            <div class="main-header__side">
-                <a class="main-header__side-item button button--plus open-modal" href="pages/form-task.html">Добавить задачу</a>
+            <?php if (empty($user_name)): ?>
+                <div class="main-header__side">
+                    <a class="main-header__side-item button button--transparent" href="form-authorization.html">Войти</a>
+                </div>
+            <?php endif ?>
+            <?php if (empty(!$user_name)): ?>
+                <div class="main-header__side">
+                    <a class="main-header__side-item button button--plus open-modal" href="pages/form-task.html">Добавить задачу</a>
 
-                <div class="main-header__side-item user-menu">
-                    <div class="user-menu__data">
-                        <p><?=$user_name; ?></p>
+                    <div class="main-header__side-item user-menu">
+                        <div class="user-menu__data">
+                            <p><?=$user_name; ?></p>
 
-                        <a href="#">Выйти</a>
+                            <a href="#">Выйти</a>
+                        </div>
                     </div>
                 </div>
-            </div>
+
+            <? endif; ?>
+
         </header>
 
         <div class="content">
@@ -49,9 +59,9 @@ $show_complete_tasks = rand(0, 1);
 
             <p>Веб-приложение для удобного ведения списка дел.</p>
         </div>
-
+        <?php if (empty(!$user_name)): ?>
         <a class="main-footer__button button button--plus" href="add.php">Добавить задачу</a>
-
+        <?php endif; ?>
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>
             <a class="social__link social__link--facebook" href="#">

@@ -1,4 +1,6 @@
 <?php
+
+
 function tasks_count($task_list, $title_task) {
     $quantity_task=0;
     foreach ($task_list as $key=>$value) {
@@ -57,12 +59,23 @@ function validateFilled($name) {
 
 }
 // Проверка есть ли проекты с таким id  в базе
-function validateProject($projects_id) {
-    $project_sql ="SELECT id=$projects_id FROM projects";
-    if ($project_sql==false ){
+function validateProject($link, $projects_id) {
+
+    $project_sql ="SELECT id FROM projects WHERE id=$projects_id";
+    $result = mysqli_query($link, $project_sql);
+    if ($result==false ){
         return "Такого проекта не существует";
     }
     return null;
+}
+
+function validateEmail($link, $email) {
+    $email_sql ="SELECT email FROM users WHERE email=$email";
+    $result = mysqli_query($link, $email_sql);
+    if ($result){
+        return "Почта занята";
+    }
+
 }
 
 
@@ -75,6 +88,7 @@ function validateCategory($name, $allowed_list) {
     }
     return null;
 }
+
 function validateDate($date) {
     if ( date('Y-m-d', strtotime($_POST[$date])) !== $_POST[$date] and !empty($_POST[$date])
         or date('Y-m-d', strtotime($_POST[$date]))<date('Y-m-d') and !empty($_POST[$date]) ) {

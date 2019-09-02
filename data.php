@@ -61,10 +61,3 @@ function get_tasks()
 };
 
 
-
-
-//            "title"=>"Собеседование в IT компании",
-//            "date"=>"01.12.2018",
-//            "category"=>"Работа",
-//            "completed"=>false
-
