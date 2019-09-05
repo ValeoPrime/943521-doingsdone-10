@@ -29,12 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     ];
 
-//    foreach ($email_base as $value) { // Проверка майла через обход массива
-//        if ($_POST ['email']==$value['email']) {
-//            array_push($errors, "Этот емаил уже используется");
-//
-//        }
-//    };
 
     foreach ($_POST as $key => $value) {
         if (isset($validation_rules[$key])) {
@@ -43,15 +37,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-    $errors['email_free']=validateEmail($link, $_POST['email']);
+//    $errors['email_free']=validateEmail($link, $_POST['email']);
 
     $errors = array_filter($errors);
+    if (empty($errors)) {
+        $email = mysqli_real_escape_string($link, $_POST['email']);
+        $sql = "SELECT id FROM users WHERE email = '$email'";
+        $res = mysqli_query($link, $sql);
 
-//    var_dump($errors);
-    $new_user = [];
-    array_push($new_user, $_POST ['email']);
-    array_push($new_user, $_POST ['password']);
-    array_push($new_user, $_POST ['name']);
+        if (mysqli_num_rows($res) > 0) {
+            $errors[] = 'Пользователь с этим email уже зарегистрирован';
+        }
+    }
+
 
 
 
@@ -59,20 +57,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $page_content = include_template('user_registration.php', [ 'errors' => $errors]);
     }
     else {
+        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        $_POST ['password']=$password;
+        $new_user = [];
+        array_push($new_user, $_POST ['email']);
+        array_push($new_user, $_POST ['password']);
+        array_push($new_user, $_POST ['name']);
+//var_dump($new_user);
+
         $sql = 'INSERT INTO users (date_of_registration, email, password, user_name) 
             VALUES (NOW(), ?, ?, ?)';
+
 
         $stmt = db_get_prepare_stmt($link, $sql, $new_user);
 
         $res = mysqli_stmt_execute($stmt);
-
+//        var_dump($res);
         if ($res) {
-//                $last_id = mysqli_insert_id($link);
 
-            header("Location: index.php"); //?id=" . $_POST ['project'])
-//            $page_content = include_template('user_registration.php', ["projects" => $projects, 'errors' => $errors,
-//                "task_counting" => $task_counting, "upload_files"=>$upload_files]);
 
+            header("Location: index.php");
 
         }
     }

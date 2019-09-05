@@ -22,8 +22,9 @@
                         <?php if (isset($errors['email'])): ?>
                         <p class="form__message">Укажите E-mail</p>
                         <?php endif; ?>
-                        <?php if (isset($errors['email_free'])): ?>
-                        <p class="form__message">Указанный E-mail  уже используется</p>
+
+                        <?php if (isset($errors['0'])): ?>
+                            <p class="form__message"><?=$errors['0']; ?></p>
                         <?php endif; ?>
                     </div>
 

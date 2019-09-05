@@ -70,7 +70,7 @@ function validateProject($link, $projects_id) {
 }
 
 function validateEmail($link, $email) {
-    $email_sql ="SELECT email FROM users WHERE email=$email";
+    $email_sql ="SELECT * FROM users WHERE email=$email";
     $result = mysqli_query($link, $email_sql);
     if ($result){
         return "Почта занята";
