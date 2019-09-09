@@ -23,7 +23,7 @@ CREATE TABLE users (
   date_of_registration DATE(10),
   email VARCHAR(40),
   user_name VARCHAR(40),
-  password VARCHAR(30)
+  password VARCHAR(70)
 );
 
 CREATE UNIQUE INDEX email ON users(email);

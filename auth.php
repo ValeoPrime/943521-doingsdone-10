@@ -6,13 +6,12 @@ require_once ("init.php");
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//var_dump($_POST);
+
 
     $validation_fields = ['email', 'password'];
     $errors = [];
 
     $validation_rules = [
-
         'email' => function () {
             return validateFilled('email');
         },
@@ -22,16 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     ];
 
-
-
     foreach ($_POST as $key => $value) {
         if (isset($validation_rules[$key])) {
             $rule = $validation_rules[$key];
             $errors[$key] = $rule();
         }
     }
-
-
 
     $errors = array_filter($errors);
 
@@ -41,9 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $user = $res ? mysqli_fetch_array($res, MYSQLI_ASSOC) : null;
 
-    if (!count($errors) and $user) {
+//var_dump($user);
+    if (!count($errors) and $user["password"]) {
+
         if (password_verify($_POST['password'], $user['password'])) {
-            $_SESSION['user'] = $user;
+          $_SESSION['user'] = $user;
         }
         else {
             $errors['password'] = 'Неверный пароль';
@@ -52,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     else {
         $errors['email'] = 'Такой пользователь не найден';
     }
-    var_dump($errors);
+
 
     if (count($errors)) {
         $page_content = include_template('auth.php', [ 'errors' => $errors]);
@@ -68,6 +65,7 @@ else {
     $page_content = include_template('auth.php', []);
 
     if (isset($_SESSION['user'])) {
+
         header("Location: /index.php");
         exit();
     }
@@ -77,7 +75,7 @@ else {
 
 $layout_content = include_template("layout.php", [
     'content' => $page_content,
-    'user_name' => "",
+    'user_name' => $_SESSION['user']['user_name'],
     'title' => 'Дела в порядке - Главная страница'
 ]);
 print($layout_content);

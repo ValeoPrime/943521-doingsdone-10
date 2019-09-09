@@ -96,7 +96,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $page_content = include_template('formtask.php', ["projects" => $projects, 'errors' => $errors,
                     "task_counting" => $task_counting, "upload_files"=>$upload_files]);
 
-
             }
         }
 }
