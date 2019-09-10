@@ -12,7 +12,10 @@ $projects = get_projects();
 $tasks ="";
 $task_counting=get_tasks();
 
+if (empty($_SESSION)) {
+    header("Location: unregistred_user.php");
 
+}
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $projects_id = $_GET['id'];
@@ -66,10 +69,7 @@ $project_sql ="SELECT id=$projects_id, project_title FROM projects";
         'title' => 'Дела в порядке - Главная страница'
     ]);
 
-    if (empty($_SESSION)) {
-        header("Location: unregistred_user.php");
 
-    }
 
     print($layout_content);
 //}
