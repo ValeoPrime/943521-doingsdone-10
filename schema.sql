@@ -34,6 +34,8 @@ CREATE INDEX status ON tasks(status);
 CREATE INDEX task ON tasks(task_title);
 CREATE INDEX deadline ON tasks(deadline);
 
+CREATE FULLTEXT INDEX tasks_search ON tasks(task_title);
+
 //ЭТИ комментарии я перед проверкой удалял!!!//
 // Типы данных CHAR- короткая строка; DATE дата; DATETIME дата+ время; INT -целое число; 
 //CREATE INDEX имя_индекса ON таблица(поле); простой индекс
