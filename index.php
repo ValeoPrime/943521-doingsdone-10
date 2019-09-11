@@ -60,6 +60,25 @@ $project_sql ="SELECT id=$projects_id, project_title FROM projects";
 // }
 //
 
+mysqli_query($link, 'CREATE FULLTEXT INDEX tasks_search ON tasks(task_title)');
+
+$search = $_GET['q'] ?? '';
+
+if ($search) {
+    $sql = "SELECT  deadline, task_title, status, user_id, project_id FROM tasks "
+        . "JOIN users ON tasks.user_id = users.id "
+        . "WHERE MATCH(task_title) AGAINST(?)";
+
+    $stmt = db_get_prepare_stmt($link, $sql, [$search]);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    if (empty($tasks)) {
+        print("Ничего не найдено по вашему запросу");
+
+    }
+}
+
     $page_content = include_template("main.php", ["tasks" => $tasks, "projects" => $projects,
         "projects_id"=>$projects_id, "task_counting"=>$task_counting ] );
 
