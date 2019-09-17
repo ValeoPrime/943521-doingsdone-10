@@ -53,24 +53,33 @@ return $time_lefts;
 // Проверяет не пустая ли переменная
 function validateFilled($name) {
     if (empty($_POST[$name])) {
-        return "Имя задачи не должно быть пустой строкой";
+        return "Поле Название не должно быть пустой строкой";
     }
 
 
 }
 // Проверка есть ли проекты с таким id  в базе
-function validateProject($link, $projects_id) {
+//function validateProject($link, $projects_id) {
+//
+//    $project_sql ="SELECT id FROM projects WHERE id=$projects_id";
+//    $result = mysqli_query($link, $project_sql);
+//    if ($result==false ){
+//        return "Такого проекта не существует";
+//    }
+//    return null;
+//}
 
-    $project_sql ="SELECT id FROM projects WHERE id=$projects_id";
+function validateProject($link, $project) {
+    $project_sql ="SELECT * FROM projects WHERE project_title='$project'";
     $result = mysqli_query($link, $project_sql);
-    if ($result==false ){
-        return "Такого проекта не существует";
+    if ($result){
+        return "Проект с таким названием уже сущестует";
     }
-    return null;
+
 }
 
 function validateEmail($link, $email) {
-    $email_sql ="SELECT * FROM users WHERE email=$email";
+    $email_sql ="SELECT * FROM users WHERE email='$email'";
     $result = mysqli_query($link, $email_sql);
     if ($result){
         return "Почта занята";
