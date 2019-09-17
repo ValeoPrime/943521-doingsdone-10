@@ -34,7 +34,7 @@ function get_tasks()
         return ("Ошибка: Невозможно подключиться к MySQL ");
 
     } else {
-        $sql = 'SELECT   deadline, task_title, status, project_id, task_file FROM tasks 
+        $sql = 'SELECT   tasks.id, deadline, task_title, status, project_id, task_file FROM tasks 
         JOIN projects ON tasks.project_id = projects.id ORDER BY date_of_creation DESC';
 
         $result = mysqli_query($link, $sql);

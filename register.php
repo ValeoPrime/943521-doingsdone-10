@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
-//    $errors['email_free']=validateEmail($link, $_POST['email']);
+    $errors['email_free']=validateEmail($link, $_POST['email']);
 
     $errors = array_filter($errors);
     if (empty($errors)) {

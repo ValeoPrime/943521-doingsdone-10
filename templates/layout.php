@@ -11,6 +11,7 @@ $show_complete_tasks = rand(0, 1);
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/flatpickr.min.css">
+
 </head>
 
 <body
@@ -36,7 +37,7 @@ $show_complete_tasks = rand(0, 1);
             <?php endif ?>
             <?php if (empty(!$_SESSION['user']['user_name'])): ?>
                 <div class="main-header__side">
-                    <a class="main-header__side-item button button--plus open-modal" href="pages/form-task.html">Добавить задачу</a>
+                    <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
 
                     <div class="main-header__side-item user-menu">
                         <div class="user-menu__data">
