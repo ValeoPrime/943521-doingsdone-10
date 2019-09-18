@@ -16,7 +16,6 @@ $tasks=$task_counting;
 
 if (empty($_SESSION)) {
     header("Location: unregistred_user.php");
-
 }
 
 if (isset($_SESSION['user']['id'])) {  //показ проектов для конкретного пользователя
@@ -25,11 +24,25 @@ if (isset($_SESSION['user']['id'])) {  //показ проектов для ко
         WHERE user_id=$userid";
     if ($result = mysqli_query($link, $sql)) {
         $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
     };
 }
 
+if(isset($_GET['task_id'])) { //модификация таска, выполнен/не выполнен
+    $task_id = $_GET['task_id'];
+    $sql = "SELECT  * FROM tasks WHERE  id=$task_id  ";
+    if ($result = mysqli_query($link, $sql)) {
+        $task = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
+        if ($task['0']["status"]==0){
+            $sql = "UPDATE tasks SET status = 1 WHERE  id=$task_id  ";
+            $result = mysqli_query($link, $sql);
+        }
+        else {
+            $sql = "UPDATE tasks SET status = 0 WHERE  id=$task_id  ";
+            $result = mysqli_query($link, $sql);
+        }
+    }
+}
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $projects_id = $_GET['id'];
@@ -37,9 +50,9 @@ if (isset($_GET['id']) && is_numeric($_GET['id'])) {
         JOIN projects ON tasks.project_id = projects.id WHERE projects.id=$projects_id ";
     if ($result = mysqli_query($link, $sql)) { // фильтрация по id проекта
         $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
     }
 }
+
 else {
     $user_id=$_SESSION['user']['id'];
     $sql ="SELECT  tasks.id, deadline, task_title, status, project_id FROM tasks
@@ -75,16 +88,6 @@ if (isset($_GET['expired_tasks'])){
         $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 }
-//var_dump($tasks);
-//$project_sql ="SELECT id=$projects_id, project_title FROM projects";
-
-//if ($project_sql==false or count($tasks)==0){
-//    print("страница не найдена, код ответа 404");
-//}
-//
-var_dump($_GET);
-//var_dump($_POST);
-//var_dump($_SESSION);
 
 if (isset($_SESSION['user']['id'])) {  //счет тасков по проектам для конкретного пользователя
     $userid = $_SESSION['user']['id'];
@@ -95,12 +98,6 @@ if (isset($_SESSION['user']['id'])) {  //счет тасков по проект
 
     };
 }
-
-//if (isset($_SESSION['user']['id'])) {
-//    $user_id = $_SESSION['user']['id'];
-//    $sql ="SELECT  deadline, task_title, status, user_id, project_id FROM tasks WHERE user_id=$user_id";
-//
-//}
 
 mysqli_query($link, 'CREATE FULLTEXT INDEX tasks_search ON tasks(task_title)');
 
@@ -130,32 +127,6 @@ foreach ($tasks as $key=>$value) { //Приводит дату таска в в�
     }
 };
 
-//if(isset($_GET['taskid'])) {
-//    $task_id = $_GET['taskid'];
-//    $sql = "SELECT  * FROM tasks WHERE  id=$task_id  ";
-//    if ($result = mysqli_query($link, $sql)) {
-//        $task = mysqli_fetch_all($result, MYSQLI_ASSOC);
-//    }
-//    foreach ($task as $value) {
-//        if ($value["status"]==0){
-//            $sql = "UPDATE tasks SET status = 1 WHERE  id=$task_id  ";
-//            if ($result = mysqli_query($link, $sql)) {
-//                $task = mysqli_fetch_all($result, MYSQLI_ASSOC);
-//            }
-//        }
-//        else {
-//            $sql = "UPDATE tasks SET status = 0 WHERE  id=$task_id  ";
-//            if ($result = mysqli_query($link, $sql)) {
-//                $task = mysqli_fetch_all($result, MYSQLI_ASSOC);
-//            }
-//
-//        }
-//    }
-//
-//}
-
-
-
     $page_content = include_template("main.php", ["tasks" => $tasks, "projects" => $projects,
         "projects_id"=>$projects_id, "task_counting"=>$task_counting, "show_complete_tasks"=>$show_complete_tasks ] );
 
@@ -165,10 +136,8 @@ foreach ($tasks as $key=>$value) { //Приводит дату таска в в�
         'title' => 'Дела в порядке - Главная страница'
     ]);
 
-
-
     print($layout_content);
-//}
+
 
 
 

@@ -88,13 +88,13 @@
                  <td class="task__select">
                       <label class="checkbox task__checkbox">
 
-                          <input class="checkbox__input visually-hidden" type="checkbox"
+                          <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?=$value["id"]; ?>"
                         <?php if($value["status"]=='1'): ?>
                         checked
                         <?php endif ?>>
 
                           <span class="checkbox__text"><?=$value["task_title"]; ?> </span>
-<!--                          <a href="/?taskid=--><?//=$value["id"]; ?><!--"> </a>-->
+
                     </label>
                         <?php if (!empty($value["task_file"]) ): ?>
                             <a href="uploads/<?= $value["task_file"]; ?>">Загруженный файл</a>
