@@ -1,21 +1,22 @@
 <?php
-// показывать или нет выполненные задачи
-$show_complete_tasks = rand(0, 1);
 
-
-require_once("functions.php");
-
-require_once("data.php");
 require_once ("init.php");
 
-$projects = get_projects();
-
-$task_counting=get_tasks();
+$projects = get_projects($link);
+$task_counting=get_tasks($link);
 $tasks=$task_counting;
-
+$show_completed='1';
 
 if (empty($_SESSION)) {
     header("Location: unregistred_user.php");
+}
+
+if($_GET['show_completed'] === '1'){
+    $show_completed='1';
+}
+
+if($_GET['show_completed'] === '0'){
+    $show_completed='0';
 }
 
 if (isset($_SESSION['user']['id'])) {  //показ проектов для конкретного пользователя
@@ -27,13 +28,20 @@ if (isset($_SESSION['user']['id'])) {  //показ проектов для ко
     };
 }
 
+$user_id=$_SESSION['user']['id'];
+$sql ="SELECT  tasks.id, deadline, task_title, status, project_id, task_file FROM tasks
+        JOIN projects ON tasks.project_id = projects.id WHERE tasks.user_id=$user_id ";
+if ($result = mysqli_query($link, $sql)) { // таски для конкретного пользователя
+    $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
 if(isset($_GET['task_id'])) { //модификация таска, выполнен/не выполнен
     $task_id = $_GET['task_id'];
     $sql = "SELECT  * FROM tasks WHERE  id=$task_id  ";
     if ($result = mysqli_query($link, $sql)) {
         $task = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        if ($task['0']["status"]==0){
+        if ($task['0']["status"]==='0'){
             $sql = "UPDATE tasks SET status = 1 WHERE  id=$task_id  ";
             $result = mysqli_query($link, $sql);
         }
@@ -46,23 +54,12 @@ if(isset($_GET['task_id'])) { //модификация таска, выполн�
 
 if (isset($_GET['id']) && is_numeric($_GET['id'])) {
     $projects_id = $_GET['id'];
-    $sql ="SELECT tasks.id, deadline, task_title, status, project_id FROM tasks
+    $sql ="SELECT tasks.id, deadline, task_title, status, project_id, task_file FROM tasks
         JOIN projects ON tasks.project_id = projects.id WHERE projects.id=$projects_id ";
     if ($result = mysqli_query($link, $sql)) { // фильтрация по id проекта
         $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 }
-
-else {
-    $user_id=$_SESSION['user']['id'];
-    $sql ="SELECT  tasks.id, deadline, task_title, status, project_id FROM tasks
-        JOIN projects ON tasks.project_id = projects.id WHERE tasks.user_id=$user_id ";
-    if ($result = mysqli_query($link, $sql)) { // таски для конкретного пользователя
-        $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    }
-}
-
-
 
 if (isset($_GET['tasks_for_today'])){
     $user_id=$_SESSION['user']['id'];
@@ -72,6 +69,7 @@ if (isset($_GET['tasks_for_today'])){
         $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 }
+
 if (isset($_GET['tasks_for_tomorrow'])){
     $user_id=$_SESSION['user']['id'];
     $sql ="SELECT  tasks.id, deadline, task_title, status, project_id FROM tasks
@@ -80,6 +78,7 @@ if (isset($_GET['tasks_for_tomorrow'])){
         $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
 }
+
 if (isset($_GET['expired_tasks'])){
     $user_id=$_SESSION['user']['id'];
     $sql ="SELECT  tasks.id, deadline, task_title, status, project_id FROM tasks
@@ -95,11 +94,8 @@ if (isset($_SESSION['user']['id'])) {  //счет тасков по проект
         WHERE user_id=$userid";
     if ($result = mysqli_query($link, $sql)) {
         $task_counting = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
     };
 }
-
-mysqli_query($link, 'CREATE FULLTEXT INDEX tasks_search ON tasks(task_title)');
 
 $search = $_GET['q'] ?? '';
 
@@ -114,21 +110,13 @@ if ($search) {
     $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
     if (empty($tasks)) {
         print("Ничего не найдено по вашему запросу");
-
     }
 }
 
-foreach ($tasks as $key=>$value) { //Приводит дату таска в вид день месяц год
-
-    if ($value ["deadline"]>0) {
-        $date=strtotime($value ["deadline"]);
-        $formatted_date = date("d-m-Y",$date);
-        $tasks [$key]["deadline"]=$formatted_date;
-    }
-};
-
+$tasks=dateformat($tasks);
+//var_dump($tasks);
     $page_content = include_template("main.php", ["tasks" => $tasks, "projects" => $projects,
-        "projects_id"=>$projects_id, "task_counting"=>$task_counting, "show_complete_tasks"=>$show_complete_tasks ] );
+        "projects_id"=>$projects_id, "task_counting"=>$task_counting, "show_completed"=>$show_completed ] );
 
     $layout_content = include_template("layout.php", [
         'content' => $page_content,

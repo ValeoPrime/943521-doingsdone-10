@@ -58,7 +58,7 @@
 
         <label class="checkbox">
             <input class="checkbox__input visually-hidden show_completed" type="checkbox"
-                <?php if ($_GET['show_completed'] == 1): ?>
+                <?php if ($show_completed === '1'): ?>
                     checked
                 <?php endif; ?>>
 
@@ -71,10 +71,10 @@
         <?php foreach($tasks as $value):;?>
             <tr class="tasks__item task
             <?php
-            if ($value['status']=='1'): ?>
+            if ($value['status']==='1'): ?>
                                 task--completed
             <?php endif ?>
-            <?php if ($_GET['show_completed']==0 and $value["status"]=='1' ): ?>
+            <?php if ($show_completed==='0' and $value["status"]==='1'): ?>
                             visually-hidden
             <?php endif ?>
 
@@ -97,11 +97,11 @@
 
                     </label>
                         <?php if (!empty($value["task_file"]) ): ?>
-                            <a href="uploads/<?= $value["task_file"]; ?>">Загруженный файл</a>
+                            <a href="uploads/<?= $value["task_file"]; ?>"><img src="img/download-link.png" width="14" height="16" alt="Загруженный файл"></a>
                         <?php endif; ?>
                 </td>
 
-                </td>
+
                 <td class="task__date"><?php
                     if ($value["deadline"]<= 0) { print ("Нет");}
                     else {print($value["deadline"]);}
@@ -109,5 +109,7 @@
                 <td class="task__controls"></td>
             </tr>
         <?php endforeach ?>
+
+
     </table>
 </main>

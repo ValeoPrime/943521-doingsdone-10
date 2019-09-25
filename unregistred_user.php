@@ -2,10 +2,6 @@
 
 require_once("functions.php");
 
-
-
-
-
 $page_content = include_template("guest.php", ["tasks" => $tasks ] );
 
 $layout_content = include_template("layout.php", [
