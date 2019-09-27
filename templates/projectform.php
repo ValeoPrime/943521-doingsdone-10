@@ -5,7 +5,7 @@
 
             <?php foreach($projects as $value): ;?>
                 <li class="main-navigation__list-item
-                        <?php if ($value["id"]==$projects_id): ;?>
+                        <?php if ($value["id"]===$projects_id): ;?>
                         main-navigation__list-item--active
                         <?php endif ?>
                         <?=$active_project; ?>">

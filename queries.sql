@@ -18,6 +18,8 @@ INSERT INTO tasks SET date_of_creation = '17.06.19', status = 0, task_title = '�
 INSERT INTO tasks SET date_of_creation = '16.06.19', status = 0, task_title = 'Купить корм для кота', task_file = '', deadline = '00.00.00', user_id = 2, project_id = 4;
 INSERT INTO tasks SET date_of_creation = '16.06.19', status = 0, task_title = 'Заказать пиццу', task_file = '', deadline = '00.00.00', user_id = 2, project_id = 4;
    
+mysqli_query($link, 'CREATE FULLTEXT INDEX tasks_search ON tasks(task_title)'); //Создание индекса полнотекстового поиска    
+
 //Получить список из всех проектов для одного пользователя;
 SELECT * FROM projects WHERE user_id = 1;
 
