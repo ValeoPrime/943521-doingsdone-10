@@ -6,6 +6,7 @@ $projects = get_projects($link);
 $task_counting=get_tasks($link);
 $tasks=$task_counting;
 $show_completed='1';
+$projects_id=0;
 
 if (empty($_SESSION)) {
     header("Location: unregistred_user.php");
@@ -114,7 +115,7 @@ if ($search) {
 }
 
 $tasks=dateformat($tasks);
-//var_dump($tasks);
+
     $page_content = include_template("main.php", ["tasks" => $tasks, "projects" => $projects,
         "projects_id"=>$projects_id, "task_counting"=>$task_counting, "show_completed"=>$show_completed ] );
 

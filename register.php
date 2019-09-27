@@ -2,8 +2,8 @@
 
 require_once ("init.php");
 
-$projects = get_projects();
-$task_counting=get_tasks();
+$projects = get_projects($link);
+$task_counting=get_tasks($link);
 
 $upload_files=[];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -29,16 +29,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $errors['email_free']=validateEmail($link, $_POST['email']);
-    $errors = array_filter($errors);
-    if (empty($errors)) {
-        $email = mysqli_real_escape_string($link, $_POST['email']);
-        $sql = "SELECT id FROM users WHERE email = '$email'";
-        $res = mysqli_query($link, $sql);
-        if (mysqli_num_rows($res) > 0) {
-            $errors[] = 'Пользователь с этим email уже зарегистрирован';
-        }
-    }
+//    $errors['email_free']=validateEmail($link, $_POST['email']);
+//
+//    $errors = array_filter($errors);
+//    if (empty($errors)) {
+//        $email = mysqli_real_escape_string($link, $_POST['email']);
+//    $sql = "SELECT id FROM users WHERE email=$email";
+//    $res = mysqli_query($link, $sql);
+//    if (mysqli_num_rows($res) > 0) {
+//        $errors[] = 'Пользователь с этим email уже зарегистрирован';
+//    }
+//}
 
     if (count($errors)) {
         $page_content = include_template('user_registration.php', [ 'errors' => $errors]);

@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
     }
 
-    $errors = array_filter($errors); // обходит массив выкидывает оттуда значения нулл
+    $errors = array_filter($errors);
 
     if (isset($_FILES['file']['name']) and !empty($_FILES['file']['name'])) {
         $tmp_name = $_FILES['file']['tmp_name'];
@@ -89,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $res = mysqli_stmt_execute($stmt);
 
      if ($res) {
-                    header("Location: index.php"); //?id=" . $_POST ['project'])
+                    header("Location: index.php");
                     $page_content = include_template('formtask.php', ["projects" => $projects, 'errors' => $errors,
                     "task_counting" => $task_counting, "upload_files"=>$upload_files]);
             }

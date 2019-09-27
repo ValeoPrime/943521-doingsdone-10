@@ -5,7 +5,7 @@
 
             <?php foreach($projects as $value): ;?>
                 <li class="main-navigation__list-item
-                <?php if ($value["id"]==$projects_id): ;?>
+                <?php if ($value["id"]===$projects_id): ;?>
                 main-navigation__list-item--active
                 <?php endif ?>
                 <?=$active_project; ?>">
@@ -89,11 +89,11 @@
                       <label class="checkbox task__checkbox">
 
                           <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?=$value["id"]; ?>"
-                        <?php if($value["status"]=='1'): ?>
+                        <?php if($value["status"]==='1'): ?>
                         checked
                         <?php endif ?>>
 
-                          <span class="checkbox__text"><?=$value["task_title"]; ?> </span>
+                          <span class="checkbox__text"><?=filter_text($value["task_title"]); ?> </span>
 
                     </label>
                         <?php if (!empty($value["task_file"]) ): ?>
@@ -104,7 +104,7 @@
 
                 <td class="task__date"><?php
                     if ($value["deadline"]<= 0) { print ("Нет");}
-                    else {print($value["deadline"]);}
+                    else {print(filter_text($value["deadline"]));}
                     ?></td>
                 <td class="task__controls"></td>
             </tr>

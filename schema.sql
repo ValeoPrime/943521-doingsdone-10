@@ -9,11 +9,11 @@ CREATE TABLE projects (
 
 CREATE TABLE tasks (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  date_of_creation DATE(10),
+  date_of_creation DATE,
   status INT(1),
   task_title VARCHAR(80),
   task_file VARCHAR(30),
-  deadline DATE(10),
+  deadline DATE,
   user_id INT(10),
   project_id INT(10)
 );

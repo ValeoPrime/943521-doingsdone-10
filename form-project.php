@@ -24,7 +24,7 @@ if (isset($_SESSION['user']['id'])) {  //счет тасков по проект
     };
 }
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $validation_fields = ['name'];
     $errors = [];
     $validation_rules = [
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     foreach ($projects as $value) { //Посик совпадений по названиям проектов НЕ УЧИТЫВАЕТ РЕГИСТР
-        if ($_POST['name']==$value['project_title']){
+        if ($_POST['name']===$value['project_title']){
             $errors['project_name_free']="Проект с таким названием уже сущестует";}
 
     };
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $res = mysqli_stmt_execute($stmt);
 
         if ($res) {
-            header("Location: index.php"); //?id=" . $_POST ['project'])
+            header("Location: index.php");
         }
     }
 }

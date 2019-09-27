@@ -2,7 +2,7 @@
 
 require_once ("init.php");
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $validation_fields = ['email', 'password'];
     $errors = [];
     $validation_rules = [

@@ -109,7 +109,7 @@ function validateProject($link, $project) {
  * "Почта занята"
  */
 function validateEmail($link, $email) {
-    $email_sql ="SELECT * FROM users WHERE email='$email'";
+    $email_sql ="SELECT * FROM users WHERE email=$email";
     $result = mysqli_query($link, $email_sql);
     if ($result){
         return "Почта занята";
@@ -126,9 +126,8 @@ function validateEmail($link, $email) {
 function validateDate($date) {
     if ( date('Y-m-d', strtotime($_POST[$date])) !== $_POST[$date] and !empty($_POST[$date])
         or date('Y-m-d', strtotime($_POST[$date]))<date('Y-m-d') and !empty($_POST[$date]) ) {
-        return "Дата выбрана в неверном формате или выбрана прошедшая дата"
-        ;}
-    else {return null;}
+        return "Дата выбрана в неверном формате или выбрана прошедшая дата";
+    }
 }
 
 /**
@@ -182,7 +181,7 @@ function db_get_prepare_stmt($link, $sql, $data = []) {
 
 function get_projects($link) {
 
-    if ($link == false) {
+    if ($link === false) {
         return ("Ошибка: Невозможно подключиться к MySQL ");
     } else {
         $sql = 'SELECT id, project_title FROM projects';
@@ -203,7 +202,7 @@ function get_projects($link) {
 
 function get_tasks ($link) {
 
-    if ($link == false) {
+    if ($link === false) {
         return ("Ошибка: Невозможно подключиться к MySQL ");
     } else {
         $sql = 'SELECT   tasks.id, deadline, task_title, status, project_id, task_file FROM tasks 
