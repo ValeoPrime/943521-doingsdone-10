@@ -31,7 +31,7 @@
                     <a class="main-header__side-item button button--transparent" href="auth.php">Войти</a>
                 </div>
             <?php endif ?>
-            <?php if (!empty($_SESSION['user']['user_name'])): ?>
+            <?php if (isset($_SESSION['user']['user_name']) and !empty($_SESSION['user']['user_name'])): ?>
                 <div class="main-header__side">
                     <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
 

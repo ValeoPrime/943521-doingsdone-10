@@ -12,11 +12,11 @@ if (empty($_SESSION)) {
     header("Location: unregistred_user.php");
 }
 
-if($_GET['show_completed'] === '1'){
+if(isset($_GET['show_completed']) and $_GET['show_completed']  === '1'){
     $show_completed='1';
 }
 
-if($_GET['show_completed'] === '0'){
+if(isset($_GET['show_completed']) and $_GET['show_completed'] === '0'){
     $show_completed='0';
 }
 
@@ -29,7 +29,10 @@ if (isset($_SESSION['user']['id'])) {  //показ проектов для ко
     };
 }
 
-$user_id=$_SESSION['user']['id'];
+if (isset($_SESSION['user']['id'])){
+    $user_id=$_SESSION['user']['id'];
+}
+
 $sql ="SELECT  tasks.id, deadline, task_title, status, project_id, task_file FROM tasks
         JOIN projects ON tasks.project_id = projects.id WHERE tasks.user_id=$user_id ";
 if ($result = mysqli_query($link, $sql)) { // таски для конкретного пользователя
@@ -121,7 +124,7 @@ $tasks=dateformat($tasks);
 
     $layout_content = include_template("layout.php", [
         'content' => $page_content,
-        'user_name' => $_SESSION['user']['user_name'],
+        'user_name' => $_SESSION['user']['user_name'] ?? '',
         'title' => 'Дела в порядке - Главная страница'
     ]);
 
