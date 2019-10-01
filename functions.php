@@ -109,10 +109,10 @@ function validateProject($link, $project) {
  * "Почта занята"
  */
 function validateEmail($link, $email) {
-    $email_sql ="SELECT * FROM users WHERE email=$email";
+    $email_sql ="SELECT email FROM users WHERE email='$email'";
     $result = mysqli_query($link, $email_sql);
-    if ($result){
-        return "Почта занята";
+    if (mysqli_num_rows($result)>0 ){
+        return "Указанный E-mail занят";
     }
 }
 /**

@@ -15,13 +15,20 @@
                         <label class="form__label" for="email">E-mail <sup>*</sup></label>
 
                         <input class="form__input
-                        <?php if (isset($errors['email']) or isset($errors['email_free'])): ?>
+                        <?php if (isset($errors['email']) or isset($errors['email_free']) or isset($errors['email_format'])): ?>
                         form__input--error
                         <?php endif; ?>
                         " type="text" name="email" id="email" value="" placeholder="Введите e-mail">
                         <?php if (isset($errors['email'])): ?>
                         <p class="form__message">Укажите E-mail</p>
                         <?php endif; ?>
+                        <?php if (isset($errors['email_free'])): ?>
+                            <p class="form__message">Указанный E-mail занят</p>
+                        <?php endif; ?>
+                        <?php if (isset($errors['email_format']) and empty($errors['email']) and empty($errors['email_free'])): ?>
+                            <p class="form__message"> E-mail введен в неверном формате</p>
+                        <?php endif; ?>
+
 
                         <?php if (isset($errors['0'])): ?>
                             <p class="form__message"><?=$errors['0']; ?></p>

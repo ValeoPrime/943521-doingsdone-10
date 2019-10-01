@@ -28,19 +28,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $errors[$key] = $rule();
         }
     }
+    $errors['email_format'];
+    if(filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)===false){
+            $errors['email_format']=1;
+    };
 
-//    $errors['email_free']=validateEmail($link, $_POST['email']);
-//
-//    $errors = array_filter($errors);
-//    if (empty($errors)) {
-//        $email = mysqli_real_escape_string($link, $_POST['email']);
-//    $sql = "SELECT id FROM users WHERE email=$email";
-//    $res = mysqli_query($link, $sql);
-//    if (mysqli_num_rows($res) > 0) {
-//        $errors[] = 'Пользователь с этим email уже зарегистрирован';
-//    }
-//}
-
+    $errors['email_free']=validateEmail($link, $_POST['email']);
+    $errors = array_filter($errors);
     if (count($errors)) {
         $page_content = include_template('user_registration.php', [ 'errors' => $errors]);
     }
@@ -58,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = db_get_prepare_stmt($link, $sql, $new_user);
         $res = mysqli_stmt_execute($stmt);
         if ($res) {
-            header("Location: auth.php");
+            header("Location: index.php");
         }
     }
 }
